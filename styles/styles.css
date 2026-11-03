@@ -62,10 +62,22 @@ div#game{
 #game:focus #focus-error{
     display:none;
 }
-#code{
-    filter:blur(5px)
+#code {
+    font-family: 'Roboto Mono', monospace;
+    white-space: pre-wrap;
+    color: var(--textSecondary);
+    filter: blur(5px);
 }
-
+.letter.correct {
+    color: var(--textPrimary);
+}
+.letter.incorrect {
+    color: #f55;
+    background: rgba(255, 85, 85, 0.2);
+}
+#game:focus .letter.current {
+    box-shadow: -2px 0 0 var(--primaryColor);
+}
 div.code{
     display: inline-block;
     font-family: 'Roboto Mono', monospace;

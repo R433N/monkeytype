@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const LANGUAGES = ['javascript', 'python', 'cpp'];
+const LANGUAGES = ['java', 'python', 'cpp'];
 const DIFFICULTIES = ['beginner', 'intermediate', 'advanced'];
 
 const snippetSchema = new mongoose.Schema({
-    language: { type: String, required: true , enum: LANGUAGES, index:true},
+    language: { type: String, required: true , enum: LANGUAGES},
     code: { type: String, required: true },
     difficulty: { type: String, required: true, enum: DIFFICULTIES } 
 });
