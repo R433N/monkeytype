@@ -21,11 +21,25 @@ function randomWord(){
     return code[randomIndex];
 }
 
-function newGame(){
-    document.getElementById(elementId='code').innerHTML = '';
-    for (let i = 0; i < code.length; i++) {
-        document.getElementById(elementId='code').innerHTML += formatCode(randomWord());;
+async function newGame(){
+    const language = document.getElementById('language').value;
+    const difficulty = document.getElementById('difficulty').value;
+    const response = await fetch(`/api/snippet/${language}/${difficulty}`);
+    const data = await response.json();
+
+    const codebox = document.getElementById('code');
+     if (!response.ok) {
+        codebox.textContent = data.error;
+        return;
     }
+      let html = '';
+    for (const word of data.code.split(' ')) {
+        html += formatCode(word);
+    }
+    codebox.innerHTML = html;
 }
+document.getElementById('language').addEventListener('change', newGame);
+document.getElementById('difficulty').addEventListener('change', newGame);
+document.querySelector('button').addEventListener('click', newGame);
 
 newGame();
