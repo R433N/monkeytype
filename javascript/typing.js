@@ -1,19 +1,30 @@
+import { Timer } from './timer.js';
+
 const game = document.getElementById('game');
 const codebox = document.getElementById('code');
+const info = document.getElementById('info');
 
 let text = '';      // the code the user has to type
 let letters = [];   // one <span> for every character in text
 let position = 0;   // index of the next character the user should type
 
+let typedCount = 0;     // every character typed, right or wrong
+let mistakeCount = 0;   // wrong characters (still counted after Backspace)
+let finished = false;
+
+const timer = new Timer((seconds) => {
+    info.textContent = `${Math.floor(seconds)}s`;
+});
+
 
 // ---------- Drawing the code ----------
 
-//we need to break the string into characters
 function renderCode(code) {
     text = code.trim();
     letters = [];
     position = 0;
     codebox.innerHTML = '';
+    resetStats();
 
     for (let i = 0; i < text.length; i++) {
         const char = text[i];
@@ -48,14 +59,24 @@ function typeChar(char) {
         return;
     }
 
+    if (!timer.hasStarted()) {
+        timer.start();
+    }
+    typedCount++;
+
     if (char === text[position]) {
         letters[position].classList.add('correct');
     } else {
         letters[position].classList.add('incorrect');
+        mistakeCount++;
     }
     position++;
 
     skipIndentation();
+
+    if (position === text.length) {
+        endGame();
+    }
 }
 
 // Like a code editor: after a newline, jump over the spaces at the start of the line
@@ -84,11 +105,49 @@ function goBack() {
 }
 
 
+// ---------- Stats ----------
+
+function getWpm() {
+    const correctCount = codebox.querySelectorAll('.correct').length;
+    const minutes = timer.getSeconds() / 60;
+    if (minutes === 0) {
+        return 0;
+    }
+    // A "word" is counted as 5 characters, the standard used by typing tests
+    return Math.round(correctCount / 5 / minutes);
+}
+
+function getAccuracy() {
+    if (typedCount === 0) {
+        return 0;
+    }
+    return Math.round((typedCount - mistakeCount) / typedCount * 100);
+}
+
+function resetStats() {
+    timer.reset();
+    typedCount = 0;
+    mistakeCount = 0;
+    finished = false;
+    info.textContent = '0s';
+}
+
+function endGame() {
+    finished = true;
+    timer.stop();
+    info.textContent = `${getWpm()} wpm · ${getAccuracy()}% acc · ${timer.getSeconds().toFixed(1)}s`;
+}
+
+
 // ---------- Keyboard ----------
-//keydown event handler
+
 game.addEventListener('keydown', (event) => {
     // Let shortcuts like Cmd+R or Ctrl+C work normally
     if (event.ctrlKey || event.metaKey) {
+        return;
+    }
+
+    if (finished) {
         return;
     }
 
@@ -121,6 +180,7 @@ async function newGame() {
     if (!response.ok) {
         text = '';
         letters = [];
+        resetStats();
         codebox.textContent = data.error;
         return;
     }

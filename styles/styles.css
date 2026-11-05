@@ -42,7 +42,7 @@ button{
 }
 div#game{
     line-height: 35px;
-    height: 210px;
+    height: 280px;
     overflow:hidden;
     position:relative;
 }
