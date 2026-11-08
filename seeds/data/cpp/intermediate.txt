@@ -1,0 +1,26 @@
+int factorial(int n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+===
+std::vector<int> nums = {1, 2, 3, 4, 5};
+int sum = 0;
+for (int n : nums) {
+    sum += n;
+}
+std::cout << "Sum: " << sum << std::endl;
+===
+bool isPalindrome(const std::string& word) {
+    int left = 0;
+    int right = word.size() - 1;
+    while (left < right) {
+        if (word[left] != word[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}

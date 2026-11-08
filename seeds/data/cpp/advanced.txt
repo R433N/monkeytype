@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> nums = {5, 3, 8, 1};
+    for (int& n : nums) {
+        n *= 2;
+    }
+    for (int n : nums) {
+        std::cout << n << " ";
+    }
+    return 0;
+}
+===
+template <typename T>
+T maxOf(const std::vector<T>& items) {
+    T best = items[0];
+    for (const T& item : items) {
+        if (item > best) {
+            best = item;
+        }
+    }
+    return best;
+}
+===
+class Rectangle {
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    double area() const {
+        return width * height;
+    }
+
+private:
+    double width;
+    double height;
+};

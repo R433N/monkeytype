@@ -1,0 +1,34 @@
+public static int binarySearch(int[] items, int target) {
+    int low = 0;
+    int high = items.length - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (items[mid] == target) {
+            return mid;
+        } else if (items[mid] < target) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+===
+public class Counter {
+    private int count = 0;
+
+    public void increment() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+===
+List<Integer> numbers = List.of(5, 3, 8, 1, 9, 4);
+List<Integer> evenSquares = numbers.stream()
+    .filter(n -> n % 2 == 0)
+    .map(n -> n * n)
+    .collect(Collectors.toList());
+System.out.println(evenSquares);

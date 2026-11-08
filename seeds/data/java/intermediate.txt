@@ -1,0 +1,21 @@
+public static boolean isPalindrome(String word) {
+    String reversed = new StringBuilder(word).reverse().toString();
+    return word.equalsIgnoreCase(reversed);
+}
+===
+public static int countVowels(String text) {
+    int count = 0;
+    for (char c : text.toLowerCase().toCharArray()) {
+        if ("aeiou".indexOf(c) != -1) {
+            count++;
+        }
+    }
+    return count;
+}
+===
+int[] numbers = {4, 8, 15, 16, 23, 42};
+int sum = 0;
+for (int n : numbers) {
+    sum += n;
+}
+System.out.println("Average: " + sum / numbers.length);

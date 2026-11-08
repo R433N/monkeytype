@@ -21,6 +21,10 @@ h1{
     color: var(--primaryColor);
 }
 
+#logo{
+    cursor:pointer;
+}
+
 #header{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -67,7 +71,9 @@ div#game{
     white-space: pre-wrap;
     color: var(--textSecondary);
     filter: blur(5px);
+    transition: transform 0.15s ease;
 }
+
 .letter.correct {
     color: var(--textPrimary);
 }

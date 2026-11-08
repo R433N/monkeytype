@@ -4,6 +4,9 @@ const game = document.getElementById('game');
 const codebox = document.getElementById('code');
 const info = document.getElementById('info');
 
+const LINE_HEIGHT = 35;
+const CURSOR_LINE = 2;
+
 let text = '';      // the code the user has to type
 let letters = [];   // one <span> for every character in text
 let position = 0;   // index of the next character the user should type
@@ -47,8 +50,16 @@ function updateCursor() {
 
     if (position < letters.length) {
         letters[position].classList.add('current');
-        letters[position].scrollIntoView({ block: 'nearest' });
+        scrollToCursor();
     }
+}
+
+function scrollToCursor(){
+    const letterTop = letters[position].getBoundingClientRect().top;
+    const codeTop = codebox.getBoundingClientRect().top;
+    const cursorLine = Math.floor((letterTop - codeTop) / LINE_HEIGHT);
+    const hiddenLines = Math.max(0, cursorLine - CURSOR_LINE);
+    codebox.style.transform = `translateY(-${hiddenLines * LINE_HEIGHT}px)`;
 }
 
 
@@ -192,5 +203,6 @@ async function newGame() {
 document.getElementById('language').addEventListener('change', newGame);
 document.getElementById('difficulty').addEventListener('change', newGame);
 document.querySelector('button').addEventListener('click', newGame);
+document.getElementById("logo").addEventListener('click', newGame);
 
 newGame();

@@ -1,0 +1,17 @@
+def is_palindrome(word):
+    word = word.lower()
+    return word == word[::-1]
+
+print(is_palindrome("Racecar"))
+===
+scores = {"ana": 90, "ben": 72, "cal": 85}
+for name, score in scores.items():
+    if score > 80:
+        print(f"{name}: {score}")
+===
+def count_vowels(text):
+    count = 0
+    for char in text.lower():
+        if char in "aeiou":
+            count += 1
+    return count

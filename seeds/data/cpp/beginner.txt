@@ -1,0 +1,13 @@
+std::string name = "World";
+std::cout << "Hello, " << name << "!" << std::endl;
+===
+for (int i = 1; i <= 5; i++) {
+    std::cout << i * i << std::endl;
+}
+===
+int age = 18;
+if (age >= 18) {
+    std::cout << "adult" << std::endl;
+} else {
+    std::cout << "minor" << std::endl;
+}

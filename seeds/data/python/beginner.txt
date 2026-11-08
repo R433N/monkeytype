@@ -1,0 +1,11 @@
+name = input("What is your name? ")
+print("Hello, " + name + "!")
+===
+for i in range(1, 6):
+    print(i * i)
+===
+age = 18
+if age >= 18:
+    print("adult")
+else:
+    print("minor")
