@@ -14,7 +14,7 @@ body{
 
 }
 main{
-    width: 600px;
+    width: 800px;
     margin: 50px auto;
 }
 h1{
@@ -26,10 +26,12 @@ h1{
 }
 
 #header{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
     text-align:right;
     margin: 20px 6px 30px;
+
 }
 #info{
     color: var(--primaryColor);
