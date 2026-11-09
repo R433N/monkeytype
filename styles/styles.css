@@ -89,3 +89,60 @@ div.code{
     font-family: 'Roboto Mono', monospace;
     margin: 0px 5px;
 }
+
+/* custom code editor */
+/* ---------- Custom code editor ---------- */
+
+#editor,
+#editor-actions,
+body.editing #code,
+body.editing #focus-error {
+    display: none;
+}
+
+body.editing #editor {
+    display: block;
+}
+
+body.editing #editor-actions {
+    display: flex;
+}
+
+#editor {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    outline: none;
+    resize: none;
+    background: transparent;
+    color: var(--textPrimary);
+    caret-color: var(--primaryColor);
+    font: inherit;
+    font-family: 'Roboto Mono', monospace;
+    line-height: inherit;
+}
+
+#editor::placeholder {
+    color: var(--textSecondary);
+}
+
+#editor-actions {
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+#editor-actions button {
+    padding: 4px 12px;
+    font-size: 1.1rem;
+}
+
+#confirmCode:hover {
+    color: #5d5;
+}
+
+#clearCode:hover {
+    color: #f55;
+}

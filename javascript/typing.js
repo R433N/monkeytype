@@ -3,6 +3,7 @@ import { Timer } from './timer.js';
 const game = document.getElementById('game');
 const codebox = document.getElementById('code');
 const info = document.getElementById('info');
+const editor = document.getElementById('editor');
 
 const LINE_HEIGHT = 35;
 const CURSOR_LINE = 2;
@@ -14,6 +15,7 @@ let position = 0;   // index of the next character the user should type
 let typedCount = 0;     // every character typed, right or wrong
 let mistakeCount = 0;   // wrong characters (still counted after Backspace)
 let finished = false;
+let editing = false;
 
 const timer = new Timer((seconds) => {
     info.textContent = `${Math.floor(seconds)}s`;
@@ -162,6 +164,10 @@ game.addEventListener('keydown', (event) => {
         return;
     }
 
+    if (editing){
+        return; // Ignore key presses while editing
+    }
+
     const key = event.key;
 
     if (key === 'Backspace') {
@@ -183,6 +189,7 @@ game.addEventListener('keydown', (event) => {
 // ---------- Loading a new game ----------
 
 async function newGame() {
+    stopEditing();
     const language = document.getElementById('language').value;
     const difficulty = document.getElementById('difficulty').value;
     const response = await fetch(`/api/snippet/${language}/${difficulty}`);
@@ -201,23 +208,51 @@ async function newGame() {
 }
 
 // allowing user to paste own code
-async function pasteCode(){
-    //first clear the codebox, then allow user to paste the code 
-    //then when user click OK, the code will be rendered in the codebox and new game will start 
-    codebox.textContent = '';
-    const userCode = prompt("Paste your code here:");
+function startEditing() {
+    editing = true;
     resetStats();
-    if (userCode) {
-        renderCode(userCode);
-        game.focus();
-    }
+    text = '';
+    letters = [];
+    codebox.innerHTML = '';
+    editor.value = '';
+    document.body.classList.add('editing');
+    editor.focus();
 }
-
+function stopEditing() {
+    editing = false;
+    document.body.classList.remove('editing');
+}
+function confirmCustomCode() {
+    // Tabs can't be typed in the game, so turn them into 4 spaces
+    const code = editor.value.replace(/\t/g, '    ').trim();
+    if (code === '') {
+        editor.focus();
+        return;
+    }
+    stopEditing();
+    renderCode(code);
+    game.focus();
+}
+function clearCustomCode() {
+    editor.value = '';
+    editor.focus();
+}
+editor.addEventListener('keydown', (event) => {
+    if (event.key === 'Tab') {
+        // Insert 4 spaces instead of jumping to the next button
+        event.preventDefault();
+        editor.setRangeText('    ', editor.selectionStart, editor.selectionEnd, 'end');
+    } else if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        confirmCustomCode();
+    }
+});
 document.getElementById('language').addEventListener('change', newGame);
 document.getElementById('difficulty').addEventListener('change', newGame);
-document.querySelector('button').addEventListener('click', newGame);
-document.getElementById("logo").addEventListener('click', newGame);
-document.getElementById('pasteCode').addEventListener('click', pasteCode);
-
+document.getElementById('newGame').addEventListener('click', newGame);
+document.getElementById('logo').addEventListener('click', newGame);
+document.getElementById('pasteCode').addEventListener('click', startEditing);
+document.getElementById('confirmCode').addEventListener('click', confirmCustomCode);
+document.getElementById('clearCode').addEventListener('click', clearCustomCode);
 
 newGame();

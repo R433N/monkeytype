@@ -31,10 +31,15 @@
     </div>
     
     <div id="game" tabindex="0">
-        <div id="code"></div>
-        <div id="focus-error">Click here to focus</div>
-        
-    
+    <div id="code"></div>
+    <textarea id="editor" spellcheck="false" maxlength="5000"
+        placeholder="Paste or type the code you want to practice..."></textarea>
+    <div id="focus-error">Click here to focus</div>
+    </div>
+
+    <div id="editor-actions">
+        <button id="confirmCode" title="Start typing this code">✓</button>
+        <button id="clearCode" title="Clear the box">✕</button>
     </div>
 </main>
     <script type="module"
