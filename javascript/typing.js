@@ -200,9 +200,24 @@ async function newGame() {
     game.focus();
 }
 
+// allowing user to paste own code
+async function pasteCode(){
+    //first clear the codebox, then allow user to paste the code 
+    //then when user click OK, the code will be rendered in the codebox and new game will start 
+    codebox.textContent = '';
+    const userCode = prompt("Paste your code here:");
+    resetStats();
+    if (userCode) {
+        renderCode(userCode);
+        game.focus();
+    }
+}
+
 document.getElementById('language').addEventListener('change', newGame);
 document.getElementById('difficulty').addEventListener('change', newGame);
 document.querySelector('button').addEventListener('click', newGame);
 document.getElementById("logo").addEventListener('click', newGame);
+document.getElementById('pasteCode').addEventListener('click', pasteCode);
+
 
 newGame();
