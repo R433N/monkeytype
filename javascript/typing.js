@@ -148,7 +148,12 @@ function resetStats() {
 function endGame() {
     finished = true;
     timer.stop();
-    info.textContent = `${getWpm()} wpm · ${getAccuracy()}% acc · ${timer.getSeconds().toFixed(1)}s`;
+
+    document.getElementById('stat-wpm').textContent = getWpm();
+    document.getElementById('stat-accuracy').textContent = `${getAccuracy()}%`;
+    document.getElementById('stat-time').textContent = `${timer.getSeconds().toFixed(1)}s`;
+
+    document.body.classList.add('showing-results');
 }
 
 
@@ -247,6 +252,14 @@ editor.addEventListener('keydown', (event) => {
         confirmCustomCode();
     }
 });
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Tab' && !editing) {
+        event.preventDefault();
+        newGame();
+    }
+});
+
 document.getElementById('language').addEventListener('change', newGame);
 document.getElementById('difficulty').addEventListener('change', newGame);
 document.getElementById('newGame').addEventListener('click', newGame);
@@ -254,5 +267,7 @@ document.getElementById('logo').addEventListener('click', newGame);
 document.getElementById('pasteCode').addEventListener('click', startEditing);
 document.getElementById('confirmCode').addEventListener('click', confirmCustomCode);
 document.getElementById('clearCode').addEventListener('click', clearCustomCode);
+document.getElementById('playAgain').addEventListener('click', newGame);
+
 
 newGame();

@@ -37,6 +37,29 @@
         placeholder="Paste or type the code you want to practice..."></textarea>
     <div id="focus-error">Click here to focus</div>
     </div>
+    <section id="results">
+        <div id="stat-cards">
+            <div class="stat-card">
+                <span class="stat-value" id="stat-wpm">0</span>
+                <span class="stat-label">wpm</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="stat-accuracy">0%</span>
+                <span class="stat-label">accuracy</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="stat-time">0s</span>
+                <span class="stat-label">time</span>
+            </div>
+        </div>
+
+        <div id="result-links">
+            <button class="link-button" id="playAgain">play again</button>
+            <button class="link-button" id="login">login to save progress</button>
+        </div>
+
+        <p id="restart-hint"><kbd>tab</kbd> → restart</p>
+    </section>
 
     <div id="editor-actions">
         <button id="confirmCode" title="Start typing this code">✓</button>
