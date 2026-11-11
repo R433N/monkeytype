@@ -143,6 +143,7 @@ function resetStats() {
     mistakeCount = 0;
     finished = false;
     info.textContent = '0s';
+    document.body.classList.remove('showing-results');
 }
 
 function endGame() {
