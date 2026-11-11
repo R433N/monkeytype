@@ -1,4 +1,5 @@
 import { Timer } from './timer.js';
+import { cleanCode } from './cleanCode.js';
 
 const game = document.getElementById('game');
 const codebox = document.getElementById('code');
@@ -25,7 +26,7 @@ const timer = new Timer((seconds) => {
 // ---------- Drawing the code ----------
 
 function renderCode(code) {
-    text = code.trim();
+    text = cleanCode(code);
     letters = [];
     position = 0;
     codebox.innerHTML = '';
@@ -229,8 +230,7 @@ function stopEditing() {
     document.body.classList.remove('editing');
 }
 function confirmCustomCode() {
-    // Tabs can't be typed in the game, so turn them into 4 spaces
-    const code = editor.value.replace(/\t/g, '    ').trim();
+    const code = cleanCode(editor.value);
     if (code === '') {
         editor.focus();
         return;
